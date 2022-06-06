@@ -1,6 +1,7 @@
 package me.eduspace.config;
 
 import lombok.RequiredArgsConstructor;
+import me.eduspace.custom.CustomUserDetailService;
 import me.eduspace.dto.JwtDTO;
 import me.eduspace.util.JwtUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +20,7 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenFilter extends OncePerRequestFilter {
-    private final UserService userService;
+    private final CustomUserDetailService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -34,10 +35,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         final String token = header.split(" ")[1].trim();
         JwtDTO jwtDTO = JwtUtil.decodeJwt(token);
-        if (jwtDTO == null) {
-            filterChain.doFilter(request, response);
-            return;
-        }
 
         String userName = jwtDTO.getName();
         UserDetails userDetails = userService.loadUserByUsername(userName);

@@ -25,6 +25,9 @@ public class UserEntity extends BaseEntity {
     private String phone;
 
     @Column
+    private String password;
+
+    @Column
     private LocalDate birthDate;
 
     @Column
@@ -38,6 +41,12 @@ public class UserEntity extends BaseEntity {
     @Column
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Column
+    private Boolean locked = false;
+
+    @Column
+    private Boolean enabled = false;
 
     @Column(name = "attach_id")
     private String attachId;
