@@ -8,12 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-public class CustomUserDetails implements UserDetails {
-    private final UserEntity user;
-
-    public CustomUserDetails(UserEntity user) {
-        this.user = user;
-    }
+public record CustomUserDetails(UserEntity user) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -50,9 +45,5 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return user.getEnabled();
-    }
-
-    public UserEntity getUser() {
-        return user;
     }
 }
