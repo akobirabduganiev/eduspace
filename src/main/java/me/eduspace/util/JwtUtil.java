@@ -17,7 +17,7 @@ public class JwtUtil {
         jwtBuilder.signWith(SignatureAlgorithm.HS256, SECRET_KEY);
         jwtBuilder.setExpiration(new Date(System.currentTimeMillis() + (60 * 60 * 1000)));
         jwtBuilder.claim("userName", username);
-        jwtBuilder.setIssuer("DAVR_BANK");
+        jwtBuilder.setIssuer("EDUSPACE");
         return jwtBuilder.compact();
     }
 
