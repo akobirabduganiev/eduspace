@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.eduspace.entity.ConfirmationSmsEntity;
 import me.eduspace.entity.UserEntity;
+import me.eduspace.enums.ConfirmationStatus;
 import me.eduspace.enums.GeneralStatus;
 import me.eduspace.exceptions.ItemAlreadyExistsException;
 import me.eduspace.exceptions.ItemNotFoundException;
@@ -24,6 +25,7 @@ public class UserService {
     private final ConfirmationSmsService confirmationSmsService;
 
     public String signUpUser(UserEntity entity) {
+
         var optional = userRepository.findByPhone(entity.getPhone());
 
         if (optional.isPresent())
@@ -45,22 +47,32 @@ public class UserService {
         var confirmationSms = new ConfirmationSmsEntity(
                 sms,
                 LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(2),
+                LocalDateTime.now().plusMinutes(0),
+                ConfirmationStatus.ACTIVE,
                 entity
         );
+
         confirmationSmsService.confirmationSms(confirmationSms);
 
         // TODO: an SMS code must be sent to the phone number
 
         return sms;
     }
+
     public void enableUser(String phone) {
         userRepository.enableUser(phone, GeneralStatus.ACTIVE);
     }
+
     public UserEntity getUserByPhone(String phone) {
         return userRepository.findByPhone(phone).orElseThrow(() -> new ItemNotFoundException("user not found"));
     }
-    private String getRandomNumberString() {
+
+    public UserEntity getById(Long id){
+        return userRepository.findById(id)
+                .orElseThrow(()->new ItemNotFoundException("User not found"));
+    }
+
+    public String getRandomNumberString() {
 
         var rnd = new Random();
         int number = rnd.nextInt(99999);

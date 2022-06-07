@@ -3,7 +3,9 @@ package me.eduspace.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.eduspace.dto.registration.RegistrationRequestDTO;
+import me.eduspace.entity.ConfirmationSmsEntity;
 import me.eduspace.entity.UserEntity;
+import me.eduspace.enums.ConfirmationStatus;
 import me.eduspace.enums.UserRole;
 import me.eduspace.exceptions.AppBadRequestException;
 import me.eduspace.exceptions.ItemAlreadyExistsException;
@@ -47,20 +49,21 @@ public class RegistrationService {
         }
     }
 
-    @Transactional
+
     public String confirmSms(String sms) {
         var confirmationSms = confirmationSmsService
                 .getSms(sms)
-                .orElseThrow(() ->
-                        new ItemNotFoundException("sms not found"));
+                .orElseThrow(() -> new ItemNotFoundException("sms not found"));
 
         if (confirmationSms.getConfirmedAt() != null)
             throw new ItemAlreadyExistsException("phone already confirmed");
 
         var expiredAt = confirmationSms.getExpiresAt();
 
-        if (expiredAt.isBefore(LocalDateTime.now()))
+        if (expiredAt.isBefore(LocalDateTime.now())) {
+            confirmationSmsService.updateStatus(sms, ConfirmationStatus.TIME_OUT);
             throw new TimeExpiredException("sms expired");
+        }
 
         confirmationSmsService.setConfirmedAt(sms);
         userService.enableUser(
@@ -70,5 +73,26 @@ public class RegistrationService {
         confirmationSmsService.delete(confirmationSms);
 
         return "confirmed successfully!";
+    }
+
+    public String againSmsCode(Long userId){
+        var confirmationSms = confirmationSmsService.getByUserId(userId);
+
+        var smsCode=userService.getRandomNumberString();
+
+        confirmationSmsService.delete(confirmationSms);
+
+        confirmationSmsService.confirmationSms(
+                new ConfirmationSmsEntity(
+                        smsCode,
+                        LocalDateTime.now(),
+                        LocalDateTime.now().plusMinutes(2),
+                        ConfirmationStatus.ACTIVE,
+                        confirmationSms.getUserEntity()
+                )
+        );
+
+        return "Please confirm this code: " + smsCode;
+
     }
 }

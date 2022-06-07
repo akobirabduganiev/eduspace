@@ -3,6 +3,7 @@ package me.eduspace.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.eduspace.enums.ConfirmationStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,6 +30,9 @@ public class ConfirmationSmsEntity {
 
     private LocalDateTime confirmedAt;
 
+    @Enumerated(EnumType.STRING)
+    private ConfirmationStatus status=ConfirmationStatus.ACTIVE;
+
     @ManyToOne
     @JoinColumn(nullable = false, name = "user_id")
     private UserEntity userEntity;
@@ -36,10 +40,12 @@ public class ConfirmationSmsEntity {
     public ConfirmationSmsEntity(String sms,
                                  LocalDateTime createdAt,
                                  LocalDateTime expiresAt,
+                                 ConfirmationStatus status,
                                  UserEntity userEntity) {
         this.sms = sms;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
+        this.status = status;
         this.userEntity = userEntity;
     }
 }

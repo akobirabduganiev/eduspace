@@ -24,9 +24,15 @@ public class RegistrationController {
         return ResponseEntity.ok(registrationService.registerUser(request));
     }
 
-    @GetMapping(path = "confirm")
+    @GetMapping(path = "/confirm")
     @ApiOperation(value = "sms confirm", notes = "method for sms confirm")
     public ResponseEntity<?> confirm(@RequestParam("sms") String sms) {
         return ResponseEntity.ok(registrationService.confirmSms(sms));
+    }
+
+    @GetMapping(path = "/againSmsCode")
+    @ApiOperation(value = "sms confirm", notes = "method for sms confirm")
+    public ResponseEntity<?> againSmsCode(@RequestParam("userId") Long userId) {
+        return ResponseEntity.ok(registrationService.againSmsCode(userId));
     }
 }
