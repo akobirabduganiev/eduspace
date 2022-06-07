@@ -1,0 +1,12 @@
+POST http://localhost:8080/api/v1/registration
+Content-Type: application/json
+
+{
+  "name": "Ali",
+  "surname": "Aliyev",
+  "phone": "+998931234321",
+  "password": "password"
+}
+
+###
+GET http://localhost:8080/api/v1/registration/confirm?sms=19492

@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -13,13 +14,16 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @ToString
 public class RegistrationRequestDTO {
-    @NotBlank(message = "firstname required!")
+    @NotBlank(message = "name required!")
     @Size(min = 3, max = 255, message = "entered information must be more than 3 letters and less than 255 letters!")
     private String name;
 
     @NotBlank(message = "surname required!")
     @Size(min = 3, max = 255, message = "entered information must be more than 3 letters and less than 255 letters!")
     private String surname;
+
+    @NotBlank(message = "birthDate required!")
+    private String birthDate;
 
     @NotBlank(message = "phone required!")
     @Size(min = 3, max = 255, message = "entered information must be more than 3 letters and less than 255 letters!")

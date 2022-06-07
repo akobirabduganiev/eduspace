@@ -1,5 +1,5 @@
 package me.eduspace.enums;
 
 public enum GeneralStatus {
-    ACTIVE, BLOCK
+    ACTIVE, BLOCK, NOT_CONFIRMED
 }

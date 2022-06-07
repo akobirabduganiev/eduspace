@@ -1,10 +1,10 @@
 package me.eduspace.service;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.eduspace.entity.ConfirmationSmsEntity;
 import me.eduspace.entity.UserEntity;
+import me.eduspace.enums.GeneralStatus;
 import me.eduspace.exceptions.ItemAlreadyExistsException;
 import me.eduspace.exceptions.ItemNotFoundException;
 import me.eduspace.repository.UserRepository;
@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 @Service
@@ -22,18 +23,19 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationSmsService confirmationSmsService;
 
-    public String signUpUser(UserEntity userEntity) {
-        var optional = userRepository.findByPhone(userEntity.getPhone());
+    public String signUpUser(UserEntity entity) {
+        var optional = userRepository.findByPhone(entity.getPhone());
 
         if (optional.isPresent())
             throw new ItemAlreadyExistsException("phone number already exists!");
 
         var encodedPassword = bCryptPasswordEncoder
-                .encode(userEntity.getPassword());
+                .encode(entity.getPassword());
 
-        userEntity.setPassword(encodedPassword);
+        entity.setPassword(encodedPassword);
+        entity.setStatus(GeneralStatus.NOT_CONFIRMED);
 
-        userRepository.save(userEntity);
+        userRepository.save(entity);
 
         var sms = getRandomNumberString();
 
@@ -44,7 +46,7 @@ public class UserService {
                 sms,
                 LocalDateTime.now(),
                 LocalDateTime.now().plusMinutes(2),
-                userEntity
+                entity
         );
         confirmationSmsService.confirmationSms(confirmationSms);
 
@@ -53,7 +55,7 @@ public class UserService {
         return sms;
     }
     public void enableUser(String phone) {
-        userRepository.enableUser(phone);
+        userRepository.enableUser(phone, GeneralStatus.ACTIVE);
     }
     public UserEntity getUserByPhone(String phone) {
         return userRepository.findByPhone(phone).orElseThrow(() -> new ItemNotFoundException("user not found"));

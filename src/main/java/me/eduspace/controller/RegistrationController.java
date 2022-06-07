@@ -13,11 +13,11 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(path = "api/v1/registration")
 @AllArgsConstructor
-@Api(tags = "registration")
+@Api(tags = "registration.http")
 public class RegistrationController {
     private final RegistrationService registrationService;
 
-    @PostMapping("/")
+    @PostMapping("")
     @ApiOperation(value = "user registration", notes = "method for user registration")
     public ResponseEntity<?> register(@RequestBody @Valid RegistrationRequestDTO request) {
 

@@ -1,7 +1,6 @@
 package me.eduspace.entity;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import me.eduspace.enums.Gender;
 import me.eduspace.enums.GeneralStatus;
@@ -13,7 +12,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @Entity
-@Table
+@Table(name = "users")
 public class UserEntity extends BaseEntity {
 
     @Column
@@ -53,12 +52,13 @@ public class UserEntity extends BaseEntity {
     private AttachEntity attach;
 
 
-    public UserEntity(String name, String surname, String phone, String password, UserRole role) {
+    public UserEntity(String name, String surname, String phone, String password, UserRole role, LocalDate birthDate) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
         this.password = password;
         this.role = role;
+        this.birthDate = birthDate;
     }
 
     public UserEntity() {
