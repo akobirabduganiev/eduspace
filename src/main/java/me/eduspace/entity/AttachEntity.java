@@ -15,13 +15,13 @@ import java.time.LocalDateTime;
 @Table(name = "attach")
 public class AttachEntity {
     @Id
-    private String id; // uuid
+    private String id;
     @Column
     private String path;
     @Column
     private String extension;
-    @Column(name = "origen_name")
-    private String origenName;
+    @Column(name = "origin_name")
+    private String originName;
     @Column()
     private Long size;
     @Column

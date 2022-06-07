@@ -1,5 +1,6 @@
 package me.eduspace.service;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.eduspace.entity.ConfirmationSmsEntity;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.Random;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Slf4j
 public class UserService {
     private final UserRepository userRepository;
@@ -51,7 +52,9 @@ public class UserService {
 
         return sms;
     }
-
+    public void enableUser(String phone) {
+        userRepository.enableUser(phone);
+    }
     public UserEntity getUserByPhone(String phone) {
         return userRepository.findByPhone(phone).orElseThrow(() -> new ItemNotFoundException("user not found"));
     }

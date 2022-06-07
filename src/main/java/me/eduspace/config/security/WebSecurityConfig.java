@@ -2,6 +2,7 @@ package me.eduspace.config.security;
 
 import lombok.AllArgsConstructor;
 import me.eduspace.config.JwtTokenFilter;
+import me.eduspace.custom.CustomUserDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -23,7 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 )
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserService userService;
+    private final CustomUserDetailService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtTokenFilter jwtTokenFilter;
 

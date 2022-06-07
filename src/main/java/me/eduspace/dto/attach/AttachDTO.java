@@ -1,4 +1,4 @@
-package me.eduspace.dto;
+package me.eduspace.dto.attach;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

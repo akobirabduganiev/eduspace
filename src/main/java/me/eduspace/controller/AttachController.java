@@ -1,7 +1,7 @@
 package me.eduspace.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import me.eduspace.dto.AttachDTO;
+import me.eduspace.dto.attach.AttachDTO;
 import me.eduspace.service.AttachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

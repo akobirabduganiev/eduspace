@@ -1,6 +1,7 @@
 package me.eduspace.entity;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import me.eduspace.enums.Gender;
 import me.eduspace.enums.GeneralStatus;
@@ -47,12 +48,20 @@ public class UserEntity extends BaseEntity {
 
     @Column
     private Boolean enabled = false;
-
-    @Column(name = "attach_id")
-    private String attachId;
     @OneToOne
-    @JoinColumn(name = "attach_id", insertable = false, unique = true)
+    @JoinColumn(name = "attach_id")
     private AttachEntity attach;
 
 
+    public UserEntity(String name, String surname, String phone, String password, UserRole role) {
+        this.name = name;
+        this.surname = surname;
+        this.phone = phone;
+        this.password = password;
+        this.role = role;
+    }
+
+    public UserEntity() {
+
+    }
 }

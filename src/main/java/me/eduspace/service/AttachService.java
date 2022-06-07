@@ -1,7 +1,7 @@
 package me.eduspace.service;
 
 import lombok.extern.slf4j.Slf4j;
-import me.eduspace.dto.AttachDTO;
+import me.eduspace.dto.attach.AttachDTO;
 import me.eduspace.entity.AttachEntity;
 import me.eduspace.exceptions.AppBadRequestException;
 import me.eduspace.exceptions.ItemNotFoundException;
@@ -110,7 +110,7 @@ public class AttachService {
 
             if (resource.exists() || resource.isReadable()) {
                 return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"" + entity.getOrigenName() + "\"")
+                        "attachment; filename=\"" + entity.getOriginName() + "\"")
                         .body(resource);
 
             } else {
@@ -139,7 +139,7 @@ public class AttachService {
         AttachEntity entity = new AttachEntity();
         entity.setId(key);
         entity.setPath(pathFolder);
-        entity.setOrigenName(file.getOriginalFilename());
+        entity.setOriginName(file.getOriginalFilename());
         entity.setExtension(extension);
         entity.setSize(file.getSize());
         attachRepository.save(entity);
@@ -150,7 +150,7 @@ public class AttachService {
         AttachDTO dto = new AttachDTO();
         dto.setId(entity.getId());
         dto.setCreatedDate(entity.getCreatedDate());
-        dto.setOrigenName(entity.getOrigenName());
+        dto.setOrigenName(entity.getOriginName());
         dto.setPath(entity.getPath());
         dto.setUrl(domainName + "/attach/download/" + entity.getId());
         return dto;
