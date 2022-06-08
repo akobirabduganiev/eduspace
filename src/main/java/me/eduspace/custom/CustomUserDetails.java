@@ -12,8 +12,8 @@ public record CustomUserDetails(UserEntity user) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        var authority =
-                new SimpleGrantedAuthority(user.getRole().name());
+        var authority = new SimpleGrantedAuthority(user.getRole().name());
+
         return Collections.singletonList(authority);
     }
 
