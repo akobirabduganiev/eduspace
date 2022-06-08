@@ -8,6 +8,7 @@ import me.eduspace.enums.Gender;
 import me.eduspace.enums.GeneralStatus;
 import me.eduspace.enums.UserRole;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -15,20 +16,14 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserDTO {
-    private Long id;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastModifedDate;
+public class UserRequestDTO {
+    @NotNull(message = "name request!")
     private String name;
+    @NotNull(message = "surname request!")
     private String surname;
     private String phone;
+    @NotNull(message = "password request!")
     private String password;
     private LocalDate birthDate;
-    private GeneralStatus status;
     private UserRole role;
-    private Gender gender;
-    private Boolean locked;
-    private Boolean enabled;
-
-    private String jwt;
 }

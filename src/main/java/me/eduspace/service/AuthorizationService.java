@@ -2,7 +2,8 @@ package me.eduspace.service;
 
 import lombok.RequiredArgsConstructor;
 import me.eduspace.dto.authorization.AuthDTO;
-import me.eduspace.dto.user.UserDTO;
+import me.eduspace.dto.user.UserRequestDTO;
+import me.eduspace.dto.user.UserResponseDTO;
 import me.eduspace.exceptions.AppBadRequestException;
 import me.eduspace.repository.UserRepository;
 import me.eduspace.util.JwtUtil;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class AuthorizationService {
     private final UserRepository userRepository;
 
-    public UserDTO login(AuthDTO dto) {
+    public UserResponseDTO login(AuthDTO dto) {
         var encoder = new BCryptPasswordEncoder();
 
         var profile = userRepository
@@ -26,7 +27,7 @@ public class AuthorizationService {
 
         var jwt = JwtUtil.createJwt(profile.getId(), profile.getPhone());
 
-        var user = new UserDTO();
+        var user = new UserResponseDTO();
         user.setName(profile.getName());
         user.setSurname(profile.getSurname());
         user.setPhone(profile.getPhone());

@@ -1,6 +1,5 @@
 package me.eduspace.service;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.eduspace.dto.payment.PaymentRequestDTO;
