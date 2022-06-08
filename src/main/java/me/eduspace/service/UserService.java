@@ -67,9 +67,12 @@ public class UserService {
         return userRepository.findByPhone(phone).orElseThrow(() -> new ItemNotFoundException("user not found"));
     }
 
-    public UserEntity getById(Long id){
+    public UserEntity checkOrGet(Long id){
         return userRepository.findById(id)
-                .orElseThrow(()->new ItemNotFoundException("user not found"));
+                .orElseThrow(()->{
+                    log.info("user not found {}", id);
+                    throw new ItemNotFoundException("user not found");
+                });
     }
 
     public String getRandomNumberString() {

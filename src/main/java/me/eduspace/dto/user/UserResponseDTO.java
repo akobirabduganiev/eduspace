@@ -1,9 +1,7 @@
 package me.eduspace.dto.user;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import me.eduspace.enums.Gender;
 import me.eduspace.enums.GeneralStatus;
 import me.eduspace.enums.UserRole;
@@ -11,24 +9,24 @@ import me.eduspace.enums.UserRole;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@ToString
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserDTO {
+@Data
+@NoArgsConstructor
+public class UserResponseDTO {
     private Long id;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastModifedDate;
     private String name;
     private String surname;
     private String phone;
     private String password;
     private LocalDate birthDate;
-    private GeneralStatus status;
     private UserRole role;
     private Gender gender;
-    private Boolean locked;
-    private Boolean enabled;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
 
-    private String jwt;
+    public UserResponseDTO(Long id, String name, String surname, String phone) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.phone = phone;
+    }
 }

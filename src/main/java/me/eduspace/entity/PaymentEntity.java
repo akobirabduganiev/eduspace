@@ -14,11 +14,17 @@ import java.time.LocalDate;
 public class PaymentEntity extends BaseEntity {
 
     @Column
-    private Long amout;
+    private Long amount;
     @Column
     private PaymentType type;
     @Column
-    private LocalDate startDate;
+    private LocalDate startDate=LocalDate.now();
     @Column
-    private LocalDate endDate;
+    private LocalDate endDate=LocalDate.now().plusMonths(1);
+
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private UserEntity user;
 }
