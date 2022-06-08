@@ -52,13 +52,14 @@ public class UserEntity extends BaseEntity {
     private AttachEntity attach;
 
 
-    public UserEntity(String name, String surname, String phone, String password, UserRole role, LocalDate birthDate) {
+    public UserEntity(String name, String surname, String phone, String password, UserRole role, LocalDate birthDate, Gender gender) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
         this.password = password;
         this.role = role;
         this.birthDate = birthDate;
+        this.gender = gender;
     }
 
     public UserEntity() {

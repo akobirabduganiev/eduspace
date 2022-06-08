@@ -12,7 +12,6 @@ import me.eduspace.exceptions.ItemAlreadyExistsException;
 import me.eduspace.exceptions.ItemNotFoundException;
 import me.eduspace.exceptions.TimeExpiredException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -39,7 +38,8 @@ public class RegistrationService {
                             request.getPhone(),
                             request.getPassword(),
                             UserRole.ROLE_USER,
-                            date
+                            date,
+                            request.getGender()
                     )
             );
             return "Please confirm this code: " + smsCode;
@@ -75,10 +75,10 @@ public class RegistrationService {
         return "confirmed successfully!";
     }
 
-    public String againSmsCode(Long userId){
+    public String againSmsCode(Long userId) {
         var confirmationSms = confirmationSmsService.getByUserId(userId);
 
-        var smsCode=userService.getRandomNumberString();
+        var smsCode = userService.getRandomNumberString();
 
         confirmationSmsService.delete(confirmationSms);
 

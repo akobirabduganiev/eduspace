@@ -17,9 +17,7 @@ public class LearningCenterEntity extends BaseEntity {
     @Column
     private String phone;
 
-    @Column(name = "user_id")
-    private Long userId;
-    @ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private UserEntity user;
+    @OneToOne
+    @JoinColumn(name = "attach_id")
+    AttachEntity attach;
 }

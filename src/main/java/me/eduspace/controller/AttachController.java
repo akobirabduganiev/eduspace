@@ -42,7 +42,7 @@ public class AttachController {
     public ResponseEntity<?> list(@RequestParam(value = "page", defaultValue = "0") int page,
                                   @RequestParam(value = "size", defaultValue = "3") int size,
                                   HttpServletRequest request) {
-        log.info("list : {}", "page: "+page , " size: "+size );
+        log.info("list : {}", "page: " + page , " size: "+size );
         return ResponseEntity.ok(attachService.paginationList(page, size));
     }
 

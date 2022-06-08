@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/authorization/")
-@Api(tags = "Authorization")
+@Api(tags = "authorization")
 public class AuthorizationController {
     private final AuthorizationService authorizationService;
 

@@ -47,7 +47,7 @@ public class UserService {
         var confirmationSms = new ConfirmationSmsEntity(
                 sms,
                 LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(0),
+                LocalDateTime.now().plusMinutes(2),
                 ConfirmationStatus.ACTIVE,
                 entity
         );
@@ -69,7 +69,7 @@ public class UserService {
 
     public UserEntity getById(Long id){
         return userRepository.findById(id)
-                .orElseThrow(()->new ItemNotFoundException("User not found"));
+                .orElseThrow(()->new ItemNotFoundException("user not found"));
     }
 
     public String getRandomNumberString() {

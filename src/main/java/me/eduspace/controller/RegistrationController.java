@@ -13,7 +13,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(path = "api/v1/registration")
 @AllArgsConstructor
-@Api(tags = "registration.http")
+@Api(tags = "registration")
 public class RegistrationController {
     private final RegistrationService registrationService;
 
