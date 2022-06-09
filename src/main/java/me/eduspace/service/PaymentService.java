@@ -7,6 +7,7 @@ import me.eduspace.dto.payment.PaymentResponseDTO;
 import me.eduspace.dto.user.UserResponseDTO;
 import me.eduspace.entity.PaymentEntity;
 import me.eduspace.exceptions.ItemNotFoundException;
+import me.eduspace.repository.PaymentRepository;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

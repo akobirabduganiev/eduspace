@@ -77,3 +77,48 @@
 08 Jun 2022 - 15:12:57.910 - o.s.web.servlet.DispatcherServlet -  INFO  - Initializing Servlet 'dispatcherServlet'
 08 Jun 2022 - 15:12:57.913 - o.s.web.servlet.DispatcherServlet -  INFO  - Completed initialization in 3 ms
 08 Jun 2022 - 15:13:09.341 - o.s.web.servlet.PageNotFound -  WARN  - Request method 'GET' not supported
+09 Jun 2022 - 10:00:05.058 - me.eduspace.EduSpaceApplication -  INFO  - Starting EduSpaceApplication using Java 18.0.1.1 on HP-PC with PID 5876 (F:\jamshedjan\java lessons\eduspace\target\classes started by HP in F:\jamshedjan\java lessons\eduspace)
+09 Jun 2022 - 10:00:05.074 - me.eduspace.EduSpaceApplication -  INFO  - The following 1 profile is active: "dev"
+09 Jun 2022 - 10:00:07.366 - o.s.d.r.c.RepositoryConfigurationDelegate -  INFO  - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+09 Jun 2022 - 10:00:07.453 - o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext -  WARN  - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'paymentRepository' defined in me.eduspace.repository.PaymentRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot register bean definition [Root bean: class [org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in me.eduspace.repository.PaymentRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration] for bean 'paymentRepository': There is already [Root bean: class [org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in me.eduspace.service.PaymentRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration] bound.
+09 Jun 2022 - 10:00:07.469 - o.s.b.a.l.ConditionEvaluationReportLoggingListener -  INFO  - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+09 Jun 2022 - 10:00:07.500 - o.s.b.d.LoggingFailureAnalysisReporter -  ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'paymentRepository', defined in me.eduspace.repository.PaymentRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration, could not be registered. A bean with that name has already been defined in me.eduspace.service.PaymentRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+09 Jun 2022 - 10:03:47.548 - me.eduspace.EduSpaceApplication -  INFO  - Starting EduSpaceApplication using Java 18.0.1.1 on HP-PC with PID 2236 (F:\jamshedjan\java lessons\eduspace\target\classes started by HP in F:\jamshedjan\java lessons\eduspace)
+09 Jun 2022 - 10:03:47.548 - me.eduspace.EduSpaceApplication -  INFO  - The following 1 profile is active: "dev"
+09 Jun 2022 - 10:03:48.470 - o.s.d.r.c.RepositoryConfigurationDelegate -  INFO  - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+09 Jun 2022 - 10:03:48.532 - o.s.d.r.c.RepositoryConfigurationDelegate -  INFO  - Finished Spring Data repository scanning in 46 ms. Found 5 JPA repository interfaces.
+09 Jun 2022 - 10:03:50.023 - o.s.b.w.e.tomcat.TomcatWebServer -  INFO  - Tomcat initialized with port(s): 8080 (http)
+09 Jun 2022 - 10:03:50.042 - o.a.catalina.core.StandardService -  INFO  - Starting service [Tomcat]
+09 Jun 2022 - 10:03:50.042 - o.a.catalina.core.StandardEngine -  INFO  - Starting Servlet engine: [Apache Tomcat/9.0.63]
+09 Jun 2022 - 10:03:50.446 - o.a.c.c.C.[Tomcat].[localhost].[/] -  INFO  - Initializing Spring embedded WebApplicationContext
+09 Jun 2022 - 10:03:50.446 - o.s.b.w.s.c.ServletWebServerApplicationContext -  INFO  - Root WebApplicationContext: initialization completed in 2837 ms
+09 Jun 2022 - 10:03:50.844 - o.h.jpa.internal.util.LogHelper -  INFO  - HHH000204: Processing PersistenceUnitInfo [name: default]
+09 Jun 2022 - 10:03:50.980 - org.hibernate.Version -  INFO  - HHH000412: Hibernate ORM core version 5.6.9.Final
+09 Jun 2022 - 10:03:51.253 - o.h.annotations.common.Version -  INFO  - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+09 Jun 2022 - 10:03:51.504 - com.zaxxer.hikari.HikariDataSource -  INFO  - HikariPool-1 - Starting...
+09 Jun 2022 - 10:03:54.375 - com.zaxxer.hikari.HikariDataSource -  INFO  - HikariPool-1 - Start completed.
+09 Jun 2022 - 10:03:54.547 - org.hibernate.dialect.Dialect -  INFO  - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+09 Jun 2022 - 10:03:59.192 - o.h.e.t.j.p.i.JtaPlatformInitiator -  INFO  - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+09 Jun 2022 - 10:03:59.223 - o.s.o.j.LocalContainerEntityManagerFactoryBean -  INFO  - Initialized JPA EntityManagerFactory for persistence unit 'default'
+09 Jun 2022 - 10:04:00.041 - o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration -  WARN  - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+09 Jun 2022 - 10:04:00.936 - o.s.s.web.DefaultSecurityFilterChain -  INFO  - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7d49fe37, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@74ab8610, org.springframework.security.web.context.SecurityContextPersistenceFilter@60658389, org.springframework.security.web.header.HeaderWriterFilter@1ab717f3, org.springframework.security.web.authentication.logout.LogoutFilter@278cbf5a, me.eduspace.config.JwtTokenFilter@35efd12c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3e563293, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7d0312a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@231c521e, org.springframework.security.web.session.SessionManagementFilter@35c3d6e8, org.springframework.security.web.access.ExceptionTranslationFilter@58a9e64d, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4f6a5cc9]
+09 Jun 2022 - 10:04:01.470 - o.s.b.w.e.tomcat.TomcatWebServer -  INFO  - Tomcat started on port(s): 8080 (http) with context path ''
+09 Jun 2022 - 10:04:01.689 - me.eduspace.EduSpaceApplication -  INFO  - Started EduSpaceApplication in 14.511 seconds (JVM running for 15.346)
+09 Jun 2022 - 10:04:24.895 - o.s.o.j.LocalContainerEntityManagerFactoryBean -  INFO  - Closing JPA EntityManagerFactory for persistence unit 'default'
+09 Jun 2022 - 10:04:24.895 - com.zaxxer.hikari.HikariDataSource -  INFO  - HikariPool-1 - Shutdown initiated...
+09 Jun 2022 - 10:04:24.974 - com.zaxxer.hikari.HikariDataSource -  INFO  - HikariPool-1 - Shutdown completed.

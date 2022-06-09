@@ -16,8 +16,4 @@ public class LearningCenterEntity extends BaseEntity {
     private String name;
     @Column
     private String phone;
-
-    @OneToOne
-    @JoinColumn(name = "attach_id")
-    AttachEntity attach;
 }

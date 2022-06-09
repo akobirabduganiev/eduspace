@@ -47,9 +47,6 @@ public class UserEntity extends BaseEntity {
 
     @Column
     private Boolean enabled = false;
-    @OneToOne
-    @JoinColumn(name = "attach_id")
-    private AttachEntity attach;
 
 
     public UserEntity(String name, String surname, String phone, String password, UserRole role, LocalDate birthDate, Gender gender) {
