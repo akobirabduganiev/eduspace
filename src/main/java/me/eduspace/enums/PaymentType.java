@@ -1,5 +1,5 @@
 package me.eduspace.enums;
 
 public enum PaymentType {
-    ONLINE, OFFLINE
+    LEARNING_CENTER, STUDENT, GROUP
 }

@@ -14,9 +14,9 @@ public class PhoneEntity extends BaseEntity {
     @Column
     private String phone;
     
-    @Column(name = "leraning_center_id", nullable = false)
-    private Long leraningCenterId;
+    @Column(name = "learning_center_id", nullable = false)
+    private Long learningCenterId;
     @ManyToOne
-    @JoinColumn(name = "leraning_center_id", insertable = false, updatable = false)
+    @JoinColumn(name = "learning_center_id", insertable = false, updatable = false)
     private LearningCenterEntity learningCenter;
 }

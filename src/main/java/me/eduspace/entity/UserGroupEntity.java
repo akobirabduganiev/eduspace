@@ -9,18 +9,17 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "user_learning_center")
-public class UserLearningCenterEntity extends BaseEntity{
-//    id, PERMISSION, user_id, lc_id,
-
-    @Enumerated(EnumType.STRING)
+@Table(name = "user_group")
+public class UserGroupEntity extends BaseEntity {
+//    ->id, user_id, group_id, PERMISSION
+    @Column
     private Permission permission;
 
-    @Column(name = "learning_center_id", nullable = false)
-    private Long learningCenterId;
+    @Column(name = "group_id", nullable = false)
+    private Long groupId;
     @ManyToOne
-    @JoinColumn(name = "learning_center_id", insertable = false, updatable = false)
-    private LearningCenterEntity learningCenter;
+    @JoinColumn(name = "group_id", insertable = false, updatable = false)
+    private GroupEntity group;
 
     @Column(name = "user_id", nullable = false)
     private Long userId;

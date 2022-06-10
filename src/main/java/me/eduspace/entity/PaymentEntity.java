@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "payment")
 public class PaymentEntity extends BaseEntity {
-
+//-> id, amount, PAYMENT_TYPE, started_date, end_date, user_id, nmadir_id
     @Column
     private Long amount;
     @Column
@@ -21,6 +21,8 @@ public class PaymentEntity extends BaseEntity {
     private LocalDate startDate=LocalDate.now();
     @Column
     private LocalDate endDate=LocalDate.now().plusMonths(1);
+    @Column
+    private Long itemId;
 
     @Column(name = "user_id", nullable = false)
     private Long userId;

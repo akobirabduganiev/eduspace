@@ -16,7 +16,7 @@ GROUP
 	-> id, name, GROUP_STATUS, cl_id, course_id
 
 TIME_TABLE
-        ->id, start_date, end_datre, WEEK_DAYS, group_id
+    ->id, start_date, end_datre, WEEK_DAYS, group_id
 
 PAYMENT
 	-> id, amount, PAYMENT_TYPE, started_date, end_date, user_id, nmadir_id

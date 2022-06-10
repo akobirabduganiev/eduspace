@@ -23,5 +23,11 @@ public class TimeEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private WeekDays weekDays;
 
+    @Column(name = "group_id", nullable = false)
+    private Long groupId;
+    @ManyToOne
+    @JoinColumn(name = "group_id", insertable = false, updatable = false)
+    private GroupEntity group;
+
 
 }
