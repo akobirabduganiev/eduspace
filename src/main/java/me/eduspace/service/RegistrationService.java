@@ -3,7 +3,7 @@ package me.eduspace.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.eduspace.dto.registration.RegistrationRequestDTO;
-import me.eduspace.entity.ConfirmationSmsEntity;
+import me.eduspace.entity.ConfirmationTokenEntity;
 import me.eduspace.entity.UserEntity;
 import me.eduspace.enums.ConfirmationStatus;
 import me.eduspace.enums.UserRole;
@@ -11,19 +11,24 @@ import me.eduspace.exceptions.AppBadRequestException;
 import me.eduspace.exceptions.ItemAlreadyExistsException;
 import me.eduspace.exceptions.ItemNotFoundException;
 import me.eduspace.exceptions.TimeExpiredException;
+import me.eduspace.util.email.EmailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
+
+import static me.eduspace.util.email.BuildEmail.buildEmail;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class RegistrationService {
     private final UserService userService;
-    private final ConfirmationSmsService confirmationSmsService;
+    private final ConfirmationTokenService confirmationTokenService;
+    private final EmailSender emailSender;
 
     public String registerUser(RegistrationRequestDTO request) {
 
@@ -31,18 +36,24 @@ public class RegistrationService {
             LocalDate date = LocalDate.parse(request.getBirthDate(),
                     DateTimeFormatter.ofPattern("d/MM/yyyy"));
 
-            String smsCode = userService.signUpUser(
+            String token = userService.signUpUser(
                     new UserEntity(
                             request.getName(),
                             request.getSurname(),
-                            request.getPhone(),
+                            request.getEmail(),
                             request.getPassword(),
                             UserRole.ROLE_USER,
                             date,
                             request.getGender()
                     )
             );
-            return "Please confirm this code: " + smsCode;
+
+            String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
+            emailSender.send(
+                    request.getEmail(),
+                    buildEmail(request.getName(), link));
+
+            return "Please confirm this token: " + token;
         } catch (DateTimeException e) {
             log.warn("incorrect birthdate");
             throw new AppBadRequestException("date of birth entered incorrectly!");
@@ -50,49 +61,46 @@ public class RegistrationService {
     }
 
 
-    public String confirmSms(String sms) {
-        var confirmationSms = confirmationSmsService
-                .getSms(sms)
-                .orElseThrow(() -> new ItemNotFoundException("sms not found"));
+    public String confirmToken(String token) {
+        var confirmationToken = confirmationTokenService
+                .getToken(token)
+                .orElseThrow(() -> new ItemNotFoundException("token not found"));
 
-        if (confirmationSms.getConfirmedAt() != null)
-            throw new ItemAlreadyExistsException("phone already confirmed");
+        if (confirmationToken.getConfirmedAt() != null)
+            throw new ItemAlreadyExistsException("email already confirmed");
 
-        var expiredAt = confirmationSms.getExpiresAt();
+        var expiredAt = confirmationToken.getExpiresAt();
 
         if (expiredAt.isBefore(LocalDateTime.now())) {
-            confirmationSmsService.updateStatus(sms, ConfirmationStatus.TIME_OUT);
-            throw new TimeExpiredException("sms expired");
+            confirmationTokenService.updateStatus(token, ConfirmationStatus.TIME_OUT);
+            throw new TimeExpiredException("token expired");
         }
 
-        confirmationSmsService.setConfirmedAt(sms);
+        confirmationTokenService.setConfirmedAt(token);
         userService.enableUser(
-                confirmationSms.getUserEntity().getPhone());
-
-
-        confirmationSmsService.delete(confirmationSms);
+                confirmationToken.getUserEntity().getEmail());
 
         return "confirmed successfully!";
     }
 
     public String againSmsCode(Long userId) {
-        var confirmationSms = confirmationSmsService.getByUserId(userId);
+        var confirmationToken = confirmationTokenService.getByUserId(userId);
 
-        var smsCode = userService.getRandomNumberString();
+        var token = UUID.randomUUID().toString();
 
-        confirmationSmsService.delete(confirmationSms);
+        confirmationTokenService.delete(confirmationToken);
 
-        confirmationSmsService.confirmationSms(
-                new ConfirmationSmsEntity(
-                        smsCode,
+        confirmationTokenService.confirmationSms(
+                new ConfirmationTokenEntity(
+                        token,
                         LocalDateTime.now(),
                         LocalDateTime.now().plusMinutes(2),
                         ConfirmationStatus.ACTIVE,
-                        confirmationSms.getUserEntity()
+                        confirmationToken.getUserEntity()
                 )
         );
 
-        return "Please confirm this code: " + smsCode;
+        return "Please confirm this code: " + token;
 
     }
 }

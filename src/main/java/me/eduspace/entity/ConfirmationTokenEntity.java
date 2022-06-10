@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table(name = "confirmation_sms")
 @Entity
-public class ConfirmationSmsEntity {
+public class ConfirmationTokenEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -37,11 +37,11 @@ public class ConfirmationSmsEntity {
     @JoinColumn(nullable = false, name = "user_id")
     private UserEntity userEntity;
 
-    public ConfirmationSmsEntity(String sms,
-                                 LocalDateTime createdAt,
-                                 LocalDateTime expiresAt,
-                                 ConfirmationStatus status,
-                                 UserEntity userEntity) {
+    public ConfirmationTokenEntity(String sms,
+                                   LocalDateTime createdAt,
+                                   LocalDateTime expiresAt,
+                                   ConfirmationStatus status,
+                                   UserEntity userEntity) {
         this.sms = sms;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;

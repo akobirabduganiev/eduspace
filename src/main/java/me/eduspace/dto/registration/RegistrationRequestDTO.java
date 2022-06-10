@@ -6,9 +6,9 @@ import lombok.Setter;
 import lombok.ToString;
 import me.eduspace.enums.Gender;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -27,9 +27,10 @@ public class RegistrationRequestDTO {
     @NotBlank(message = "birthDate required!")
     private String birthDate;
 
-    @NotBlank(message = "phone required!")
+    @NotBlank(message = "email required!")
+    @Email
     @Size(min = 3, max = 255, message = "entered information must be more than 3 letters and less than 255 letters!")
-    private String phone;
+    private String email;
 
     @NotBlank(message = "password required!")
     @Size(min = 3, max = 255, message = "entered information must be more than 3 letters and less than 255 letters!")

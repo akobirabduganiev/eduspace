@@ -10,11 +10,11 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
-    Optional<UserEntity> findByPhone(String phone);
+    Optional<UserEntity> findByEmail(String email);
 
     @Transactional
     @Modifying
     @Query("update UserEntity u " +
-            "set u.enabled = true, u.status = ?2 where u.phone=?1")
-    void enableUser(String phone, UserStatus status);
+            "set u.enabled = true, u.status = ?2 where u.email=?1")
+    void enableUser(String email, UserStatus status);
 }

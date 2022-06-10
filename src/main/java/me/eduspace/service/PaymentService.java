@@ -75,7 +75,7 @@ public class PaymentService {
                                 user.getId(),
                                 user.getName(),
                                 user.getSurname(),
-                                user.getPhone()))
+                                user.getEmail()))
                 .build();
     }
 }

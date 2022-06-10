@@ -24,7 +24,7 @@ public record CustomUserDetails(UserEntity user) implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getPhone();
+        return user.getEmail();
     }
 
     @Override

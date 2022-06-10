@@ -22,7 +22,7 @@ public class UserEntity extends BaseEntity {
     private String surname;
 
     @Column
-    private String phone;
+    private String email;
 
     @Column
     private String password;
@@ -49,10 +49,10 @@ public class UserEntity extends BaseEntity {
     private Boolean enabled = false;
 
 
-    public UserEntity(String name, String surname, String phone, String password, UserRole role, LocalDate birthDate, Gender gender) {
+    public UserEntity(String name, String surname, String email, String password, UserRole role, LocalDate birthDate, Gender gender) {
         this.name = name;
         this.surname = surname;
-        this.phone = phone;
+        this.email = email;
         this.password = password;
         this.role = role;
         this.birthDate = birthDate;

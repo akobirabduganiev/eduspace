@@ -27,7 +27,7 @@ public class RegistrationController {
     @GetMapping(path = "/confirm")
     @ApiOperation(value = "sms confirm", notes = "method for sms confirm")
     public ResponseEntity<?> confirm(@RequestParam("sms") String sms) {
-        return ResponseEntity.ok(registrationService.confirmSms(sms));
+        return ResponseEntity.ok(registrationService.confirmToken(sms));
     }
 
     @GetMapping(path = "/againSmsCode")
