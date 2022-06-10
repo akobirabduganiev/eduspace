@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "confirmation_sms")
+@Table(name = "confirmation_token")
 @Entity
 public class ConfirmationTokenEntity {
     @Id
@@ -29,9 +29,9 @@ public class ConfirmationTokenEntity {
     private LocalDateTime expiresAt;
 
     private LocalDateTime confirmedAt;
-
+    @Column
     @Enumerated(EnumType.STRING)
-    private ConfirmationStatus status=ConfirmationStatus.ACTIVE;
+    private ConfirmationStatus status = ConfirmationStatus.ACTIVE;
 
     @ManyToOne
     @JoinColumn(nullable = false, name = "user_id")

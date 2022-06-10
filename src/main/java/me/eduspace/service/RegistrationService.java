@@ -49,9 +49,11 @@ public class RegistrationService {
             );
 
             String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
-            emailSender.send(
+
+            var thread = new Thread(() -> emailSender.send(
                     request.getEmail(),
-                    buildEmail(request.getName(), link));
+                    buildEmail(request.getName(), link)));
+            thread.start();
 
             return "Please confirm this token: " + token;
         } catch (DateTimeException e) {
