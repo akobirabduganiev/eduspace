@@ -6,19 +6,16 @@ import me.eduspace.bucket.BucketName;
 import me.eduspace.entity.ConfirmationSmsEntity;
 import me.eduspace.entity.UserEntity;
 import me.eduspace.enums.ConfirmationStatus;
-import me.eduspace.enums.GeneralStatus;
 import me.eduspace.exceptions.AppBadRequestException;
 import me.eduspace.exceptions.ItemAlreadyExistsException;
 import me.eduspace.exceptions.ItemNotFoundException;
 import me.eduspace.repository.UserRepository;
-import me.eduspace.util.AmazonUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
@@ -90,6 +87,19 @@ public class UserService {
             log.warn("upload not completed!", e);
             throw new AppBadRequestException("upload not completed!");
         }
+
+    }
+
+    public byte[] downloadUserProfileImage(Long userProfileId) {
+        UserEntity user = checkOrGet(userProfileId);
+
+        String path = String.format("%s/%s",
+                BucketName.PROFILE_IMAGE.getBucketName(),
+                user.getId());
+
+        return user.getImageLink()
+                .map(key -> fileStoreService.download(path, key))
+                .orElse(new byte[0]);
 
     }
     public UserEntity getUserByPhone(String phone) {

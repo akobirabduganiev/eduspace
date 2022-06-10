@@ -1,24 +1,17 @@
 package me.eduspace.util;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.eduspace.entity.UserEntity;
 import me.eduspace.exceptions.AppBadRequestException;
-import me.eduspace.repository.UserRepository;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import static org.apache.http.entity.ContentType.*;
 
 @Slf4j
-@RequiredArgsConstructor
 public class AmazonUtil {
-    private final UserRepository userRepository;
 
     public static void isImage(MultipartFile file) {
         if (!Arrays.asList(
