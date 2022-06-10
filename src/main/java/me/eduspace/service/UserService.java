@@ -2,19 +2,29 @@ package me.eduspace.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.eduspace.bucket.BucketName;
 import me.eduspace.entity.ConfirmationSmsEntity;
 import me.eduspace.entity.UserEntity;
 import me.eduspace.enums.ConfirmationStatus;
 import me.eduspace.enums.GeneralStatus;
+import me.eduspace.exceptions.AppBadRequestException;
 import me.eduspace.exceptions.ItemAlreadyExistsException;
 import me.eduspace.exceptions.ItemNotFoundException;
 import me.eduspace.repository.UserRepository;
+import me.eduspace.util.AmazonUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
+
+import static me.eduspace.util.AmazonUtil.*;
 
 @Service
 @AllArgsConstructor
@@ -23,6 +33,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationSmsService confirmationSmsService;
+    private final FileStoreService fileStoreService;
 
     public String signUpUser(UserEntity entity) {
 
@@ -62,7 +73,25 @@ public class UserService {
     public void enableUser(String phone) {
         userRepository.enableUser(phone, GeneralStatus.ACTIVE);
     }
+    public void uploadUserProfileImage(Long userProfileId, MultipartFile file) {
+        isFileEmpty(file);
+        isImage(file);
+        UserEntity user = checkOrGet(userProfileId);
 
+        Map<String, String> metadata = extractMetadata(file);
+
+        String path = String.format("%s/%s", BucketName.PROFILE_IMAGE.getBucketName(), user.getId());
+        String filename = String.format("%s-%s", file.getOriginalFilename(), UUID.randomUUID());
+
+        try {
+            fileStoreService.save(path, filename, Optional.of(metadata), file.getInputStream());
+            user.setImageLink(filename);
+        } catch (IOException e) {
+            log.warn("upload not completed!", e);
+            throw new AppBadRequestException("upload not completed!");
+        }
+
+    }
     public UserEntity getUserByPhone(String phone) {
         return userRepository.findByPhone(phone).orElseThrow(() -> new ItemNotFoundException("user not found"));
     }

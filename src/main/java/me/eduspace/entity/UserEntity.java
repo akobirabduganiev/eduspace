@@ -31,6 +31,9 @@ public class UserEntity extends BaseEntity {
     private LocalDate birthDate;
 
     @Column
+    private String imageLink;
+
+    @Column
     @Enumerated(EnumType.STRING)
     private GeneralStatus status;
 
