@@ -18,7 +18,6 @@ public class LearningCenterService {
         var entity = new LearningCenterEntity();
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
-        entity.setPhone(dto.getPhone());
         learningCenterRepository.save(entity);
 
         return toDTO(entity);
@@ -31,7 +30,6 @@ public class LearningCenterService {
 
         dto.setId(entity.getId());
         dto.setName(entity.getName());
-        dto.setPhone(entity.getPhone());
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setLastModifiedDate(entity.getLastModifiedDate());
         dto.setDescription(entity.getDescription());

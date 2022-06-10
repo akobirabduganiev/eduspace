@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "group")
+@Table(name = "groups")
 public class GroupEntity extends BaseEntity {
 //    -> id, name, GROUP_STATUS, cl_id, course_id
     @Column

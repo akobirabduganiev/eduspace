@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.eduspace.enums.Gender;
 import me.eduspace.enums.UserRole;
+import me.eduspace.enums.UserStatus;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -37,6 +38,10 @@ public class UserEntity extends BaseEntity {
     @Column
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
 
     @Column
     @Enumerated(EnumType.STRING)
