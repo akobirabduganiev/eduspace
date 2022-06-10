@@ -1,0 +1,52 @@
+**********  ENTITY *****************
+
+USER
+	-> id , name, surname, phone (uniqe), ROLE, USER_STATUS, birthDate, GENDER, attach_id, password
+
+LEARNING CENTER
+	-> id, desc, name, attach_id
+
+PHONE
+	-> id, phone, lc_id
+
+COURSE
+	-> id, name, duration, price, COURCE_STATUS, lc_id
+
+GROUP
+	-> id, name, GROUP_STATUS, cl_id, course_id
+
+TIME_TABLE
+        ->id, start_date, end_datre, WEEK_DAYS, group_id
+
+PAYMENT
+	-> id, amount, PAYMENT_TYPE, started_date, end_date, user_id, nmadir_id
+
+USER_LEARNING_CENTER
+	-> id, PERMISSION, user_id, lc_id,
+
+USER_GROUP
+	->id, user_id, group_id, PERMISSION
+
+
+
+
+
+
+********** ENUMS *********
+
+permission -> OWNER, TEACHER, STUDENT
+
+role -> USER, ADMIN
+
+user_status -> ACTIVE , BLOCK, NOT_CONFIRMED
+
+gender -> MALE, FAMALE
+
+course_status -> ACTIVE , DELETED
+
+group_status -> ACTIVE, DELETED
+
+payment_type -> LEARNING_CENTER, STUDENT, GROUP
+
+
+

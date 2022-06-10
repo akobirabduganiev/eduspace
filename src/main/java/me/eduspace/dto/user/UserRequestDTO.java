@@ -4,13 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import me.eduspace.enums.Gender;
-import me.eduspace.enums.GeneralStatus;
 import me.eduspace.enums.UserRole;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

@@ -1,7 +1,7 @@
 package me.eduspace.repository;
 
 import me.eduspace.entity.UserEntity;
-import me.eduspace.enums.GeneralStatus;
+import me.eduspace.enums.UserStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,5 +16,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Modifying
     @Query("update UserEntity u " +
             "set u.enabled = true, u.status = ?2 where u.phone=?1")
-    void enableUser(String phone, GeneralStatus status);
+    void enableUser(String phone, UserStatus status);
 }

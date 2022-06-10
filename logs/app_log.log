@@ -122,3 +122,27 @@ Consider renaming one of the beans or enabling overriding by setting spring.main
 09 Jun 2022 - 10:04:24.895 - o.s.o.j.LocalContainerEntityManagerFactoryBean -  INFO  - Closing JPA EntityManagerFactory for persistence unit 'default'
 09 Jun 2022 - 10:04:24.895 - com.zaxxer.hikari.HikariDataSource -  INFO  - HikariPool-1 - Shutdown initiated...
 09 Jun 2022 - 10:04:24.974 - com.zaxxer.hikari.HikariDataSource -  INFO  - HikariPool-1 - Shutdown completed.
+09 Jun 2022 - 10:04:30.884 - me.eduspace.EduSpaceApplication -  INFO  - Starting EduSpaceApplication using Java 18.0.1.1 on HP-PC with PID 7648 (F:\jamshedjan\java lessons\eduspace\target\classes started by HP in F:\jamshedjan\java lessons\eduspace)
+09 Jun 2022 - 10:04:30.884 - me.eduspace.EduSpaceApplication -  INFO  - The following 1 profile is active: "dev"
+09 Jun 2022 - 10:04:31.785 - o.s.d.r.c.RepositoryConfigurationDelegate -  INFO  - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+09 Jun 2022 - 10:04:31.831 - o.s.d.r.c.RepositoryConfigurationDelegate -  INFO  - Finished Spring Data repository scanning in 47 ms. Found 5 JPA repository interfaces.
+09 Jun 2022 - 10:04:32.459 - o.s.b.w.e.tomcat.TomcatWebServer -  INFO  - Tomcat initialized with port(s): 8080 (http)
+09 Jun 2022 - 10:04:32.467 - o.a.catalina.core.StandardService -  INFO  - Starting service [Tomcat]
+09 Jun 2022 - 10:04:32.467 - o.a.catalina.core.StandardEngine -  INFO  - Starting Servlet engine: [Apache Tomcat/9.0.63]
+09 Jun 2022 - 10:04:32.647 - o.a.c.c.C.[Tomcat].[localhost].[/] -  INFO  - Initializing Spring embedded WebApplicationContext
+09 Jun 2022 - 10:04:32.647 - o.s.b.w.s.c.ServletWebServerApplicationContext -  INFO  - Root WebApplicationContext: initialization completed in 1697 ms
+09 Jun 2022 - 10:04:32.805 - o.h.jpa.internal.util.LogHelper -  INFO  - HHH000204: Processing PersistenceUnitInfo [name: default]
+09 Jun 2022 - 10:04:32.836 - org.hibernate.Version -  INFO  - HHH000412: Hibernate ORM core version 5.6.9.Final
+09 Jun 2022 - 10:04:32.946 - o.h.annotations.common.Version -  INFO  - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+09 Jun 2022 - 10:04:33.009 - com.zaxxer.hikari.HikariDataSource -  INFO  - HikariPool-1 - Starting...
+09 Jun 2022 - 10:04:33.370 - com.zaxxer.hikari.HikariDataSource -  INFO  - HikariPool-1 - Start completed.
+09 Jun 2022 - 10:04:33.370 - org.hibernate.dialect.Dialect -  INFO  - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+09 Jun 2022 - 10:04:34.092 - o.h.e.t.j.p.i.JtaPlatformInitiator -  INFO  - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+09 Jun 2022 - 10:04:34.107 - o.s.o.j.LocalContainerEntityManagerFactoryBean -  INFO  - Initialized JPA EntityManagerFactory for persistence unit 'default'
+09 Jun 2022 - 10:04:34.515 - o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration -  WARN  - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+09 Jun 2022 - 10:04:35.190 - o.s.s.web.DefaultSecurityFilterChain -  INFO  - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7d49fe37, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@74ab8610, org.springframework.security.web.context.SecurityContextPersistenceFilter@60658389, org.springframework.security.web.header.HeaderWriterFilter@2e27325d, org.springframework.security.web.authentication.logout.LogoutFilter@278cbf5a, me.eduspace.config.JwtTokenFilter@3db5195, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3e563293, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7d0312a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@231c521e, org.springframework.security.web.session.SessionManagementFilter@1399ad68, org.springframework.security.web.access.ExceptionTranslationFilter@21202507, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4f6a5cc9]
+09 Jun 2022 - 10:04:35.613 - o.s.b.w.e.tomcat.TomcatWebServer -  INFO  - Tomcat started on port(s): 8080 (http) with context path ''
+09 Jun 2022 - 10:04:35.817 - me.eduspace.EduSpaceApplication -  INFO  - Started EduSpaceApplication in 6.002 seconds (JVM running for 6.913)
+09 Jun 2022 - 10:07:16.622 - o.s.o.j.LocalContainerEntityManagerFactoryBean -  INFO  - Closing JPA EntityManagerFactory for persistence unit 'default'
+09 Jun 2022 - 10:07:16.654 - com.zaxxer.hikari.HikariDataSource -  INFO  - HikariPool-1 - Shutdown initiated...
+09 Jun 2022 - 10:07:16.654 - com.zaxxer.hikari.HikariDataSource -  INFO  - HikariPool-1 - Shutdown completed.

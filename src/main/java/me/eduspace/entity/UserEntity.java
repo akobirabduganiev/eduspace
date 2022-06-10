@@ -1,9 +1,10 @@
 package me.eduspace.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.eduspace.enums.Gender;
-import me.eduspace.enums.GeneralStatus;
+import me.eduspace.enums.UserStatus;
 import me.eduspace.enums.UserRole;
 
 import javax.persistence.*;
@@ -13,15 +14,16 @@ import java.time.LocalDate;
 @Getter
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
 public class UserEntity extends BaseEntity {
-
+//id , name, surname, phone (uniqe), ROLE, USER_STATUS, birthDate, GENDER, attach_id, password
     @Column
     private String name;
 
     @Column
     private String surname;
 
-    @Column
+    @Column(unique = true)
     private String phone;
 
     @Column
@@ -35,7 +37,7 @@ public class UserEntity extends BaseEntity {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private GeneralStatus status;
+    private UserStatus status;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -60,9 +62,5 @@ public class UserEntity extends BaseEntity {
         this.role = role;
         this.birthDate = birthDate;
         this.gender = gender;
-    }
-
-    public UserEntity() {
-
     }
 }
