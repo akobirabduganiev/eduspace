@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.eduspace.dto.authorization.AuthDTO;
+import me.eduspace.dto.authorization.AuthResponseDTO;
 import me.eduspace.dto.user.UserRequestDTO;
 import me.eduspace.dto.user.UserResponseDTO;
 import me.eduspace.service.AuthorizationService;
@@ -24,7 +25,7 @@ public class AuthorizationController {
 
     @PostMapping("/login")
     @ApiOperation(value = "Login", notes = "method for login ")
-    public ResponseEntity<UserResponseDTO> login(@RequestBody AuthDTO dto) {
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthDTO dto) {
         return ResponseEntity.ok(authorizationService.login(dto));
     }
 }

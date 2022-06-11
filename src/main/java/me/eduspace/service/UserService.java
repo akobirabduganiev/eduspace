@@ -3,6 +3,7 @@ package me.eduspace.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.eduspace.bucket.BucketName;
+import me.eduspace.dto.user.UserDetailDTO;
 import me.eduspace.dto.user.UserRequestDTO;
 import me.eduspace.dto.user.UserResponseDTO;
 import me.eduspace.entity.ConfirmationTokenEntity;
@@ -14,6 +15,10 @@ import me.eduspace.exceptions.AppBadRequestException;
 import me.eduspace.exceptions.ItemAlreadyExistsException;
 import me.eduspace.exceptions.ItemNotFoundException;
 import me.eduspace.repository.UserRepository;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,32 +42,30 @@ public class UserService {
     private final ConfirmationTokenService confirmationTokenService;
     private final FileStoreService fileStoreService;
 
-    /*public UserResponseDTO create(UserRequestDTO dto){
-        var optional = userRepository.findByEmail(dto.getEmail());
+    public UserResponseDTO getById(Long id){
+        return toDTO(checkOrGet(id));
+    }
 
-        if (optional.isPresent())
-            throw new ItemAlreadyExistsException("email already exists!");
+    public PageImpl<UserResponseDTO> getPagination(Integer page, Integer size){
+        Pageable pageable= PageRequest.of(page, size, Sort.Direction.DESC, "createdDate");
 
-        var entity=new UserEntity();
-        *//*@NotNull(message = "name request!")
-        private String name;
-        @NotNull(message = "surname request!")
-        private String surname;
-        @NotNull(message = "phone request!")
-        private String phone;
-        @NotNull(message = "email request!")
-        private String email;
-        @NotNull(message = "password request!")
-        private String password;
-        private LocalDate birthDate;
-        private UserRole role;*//*
-        entity.setName(dto.getName());
-        entity.setSurname(dto.getSurname());
-        entity.setPhone(dto.getPhone());
-        entity.setEmail(dto.getEmail());
-        entity.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+        var pagination=userRepository.findAll(pageable);
 
-    }*/
+        var list=pagination
+                .stream()
+                .map(this::toDTO)
+                .toList();
+
+        return new PageImpl<>(list, pageable, pagination.getTotalElements());
+    }
+
+
+    public Boolean updateDetail(Long userId, UserDetailDTO dto){
+        checkOrGet(userId);
+
+        return 0 < userRepository.updateDetail(dto.getName(), dto.getSurname(), dto.getPhone(), dto.getBirthDate(), dto.getGender(), userId);
+
+    }
 
     public String signUpUser(UserEntity entity) {
 
@@ -146,4 +149,28 @@ public class UserService {
                 });
     }
 
+    public UserResponseDTO toDTO(UserEntity entity){
+       return UserResponseDTO.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .surname(entity.getSurname())
+                .phone(entity.getPhone())
+                .email(entity.getEmail())
+                .password(entity.getPassword())
+                .birthDate(entity.getBirthDate())
+                .role(entity.getRole())
+                .gender(entity.getGender())
+                .createdDate(entity.getCreatedDate())
+                .lastModifiedDate(entity.getLastModifiedDate())
+                .build();
+    }
+
 }
+
+
+
+
+
+
+
+
