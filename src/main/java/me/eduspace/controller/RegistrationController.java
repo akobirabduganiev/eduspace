@@ -25,13 +25,13 @@ public class RegistrationController {
     }
 
     @GetMapping(path = "/confirm")
-    @ApiOperation(value = "sms confirm", notes = "method for sms confirm")
-    public ResponseEntity<?> confirm(@RequestParam("sms") String sms) {
-        return ResponseEntity.ok(registrationService.confirmToken(sms));
+    @ApiOperation(value = "token confirm", notes = "method for token confirm")
+    public ResponseEntity<?> confirm(@RequestParam("token") String token) {
+        return ResponseEntity.ok(registrationService.confirmToken(token));
     }
 
     @GetMapping(path = "/againSmsCode")
-    @ApiOperation(value = "sms confirm", notes = "method for sms confirm")
+    @ApiOperation(value = "token confirm", notes = "method for token confirm")
     public ResponseEntity<?> againSmsCode(@RequestParam("userId") Long userId) {
         return ResponseEntity.ok(registrationService.againSmsCode(userId));
     }

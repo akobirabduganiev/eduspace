@@ -20,7 +20,7 @@ public class ConfirmationTokenEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String sms;
+    private String token;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -37,12 +37,12 @@ public class ConfirmationTokenEntity {
     @JoinColumn(nullable = false, name = "user_id")
     private UserEntity userEntity;
 
-    public ConfirmationTokenEntity(String sms,
+    public ConfirmationTokenEntity(String token,
                                    LocalDateTime createdAt,
                                    LocalDateTime expiresAt,
                                    ConfirmationStatus status,
                                    UserEntity userEntity) {
-        this.sms = sms;
+        this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
         this.status = status;
