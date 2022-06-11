@@ -92,7 +92,7 @@ public class RegistrationService {
 
         confirmationTokenService.delete(confirmationToken);
 
-        confirmationTokenService.confirmationSms(
+        confirmationTokenService.confirmationToken(
                 new ConfirmationTokenEntity(
                         token,
                         LocalDateTime.now(),

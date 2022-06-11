@@ -37,7 +37,7 @@ public class UserService {
         var optional = userRepository.findByEmail(entity.getEmail());
 
         if (optional.isPresent())
-            throw new ItemAlreadyExistsException("email number already exists!");
+            throw new ItemAlreadyExistsException("email already exists!");
 
         var encodedPassword = bCryptPasswordEncoder
                 .encode(entity.getPassword());
@@ -59,9 +59,7 @@ public class UserService {
                 entity
         );
 
-        confirmationTokenService.confirmationSms(confirmationSms);
-
-        // TODO: an SMS code must be sent to the email number
+        confirmationTokenService.confirmationToken(confirmationSms);
 
         return token;
     }
@@ -69,19 +67,21 @@ public class UserService {
     public void enableUser(String email) {
         userRepository.enableUser(email, UserStatus.ACTIVE);
     }
-    public void uploadUserProfileImage(Long userProfileId, MultipartFile file) {
+
+    public void uploadUserProfileImage(String username, MultipartFile file) {
         isFileEmpty(file);
         isImage(file);
-        UserEntity user = checkOrGet(userProfileId);
+        UserEntity user = getUserByEmail(username);
 
         Map<String, String> metadata = extractMetadata(file);
 
-        String path = String.format("%s/%s", BucketName.PROFILE_IMAGE.getBucketName(), user.getId());
+        String path = String.format("%s/%s", BucketName.PROFILE_IMAGE.getBucketName(), user.getEmail());
         String filename = String.format("%s-%s", file.getOriginalFilename(), UUID.randomUUID());
 
         try {
             fileStoreService.save(path, filename, Optional.of(metadata), file.getInputStream());
-            user.setImageLink(filename);
+            userRepository.setImageLink(filename, user.getEmail());
+            userRepository.updateLastModifiedDate(LocalDateTime.now(), user.getEmail());
         } catch (IOException e) {
             log.warn("upload not completed!", e);
             throw new AppBadRequestException("upload not completed!");
@@ -89,25 +89,26 @@ public class UserService {
 
     }
 
-    public byte[] downloadUserProfileImage(Long userProfileId) {
-        UserEntity user = checkOrGet(userProfileId);
+    public byte[] downloadUserProfileImage(String username) {
+        UserEntity user = getUserByEmail(username);
 
         String path = String.format("%s/%s",
                 BucketName.PROFILE_IMAGE.getBucketName(),
-                user.getId());
+                user.getEmail());
 
         return user.getImageLink()
                 .map(key -> fileStoreService.download(path, key))
                 .orElse(new byte[0]);
 
     }
+
     public UserEntity getUserByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new ItemNotFoundException("user not found"));
     }
 
-    public UserEntity checkOrGet(Long id){
+    public UserEntity checkOrGet(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(()->{
+                .orElseThrow(() -> {
                     log.info("user not found {}", id);
                     throw new ItemNotFoundException("user not found");
                 });
