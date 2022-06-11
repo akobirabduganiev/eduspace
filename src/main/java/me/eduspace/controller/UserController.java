@@ -32,10 +32,9 @@ public class UserController {
         userService.uploadUserProfileImage(userDetails.getUsername(), file);
     }
     @ApiOperation(value = "user image download", notes = "method for user download image")
-    @GetMapping("{userProfileId}/image/download")
+    @GetMapping("/image/download")
     @PreAuthorize("hasRole('USER')")
-    public byte[] downloadUserProfileImage(@PathVariable("userProfileId") Long userProfileId,
-                                           Authentication authentication) {
+    public byte[] downloadUserProfileImage(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return userService.downloadUserProfileImage(userDetails.getUsername());
     }
