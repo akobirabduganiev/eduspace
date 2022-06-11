@@ -1,7 +1,7 @@
 **********  ENTITY *****************
 
 USER
-	-> id , name, surname, phone (uniqe), ROLE, USER_STATUS, birthDate, GENDER, attach_id, password
+	-> id , name, surname, phone, ROLE, USER_STATUS, birthDate, GENDER, attach_id, password
 
 LEARNING CENTER
 	-> id, desc, name, attach_id
@@ -22,7 +22,7 @@ PAYMENT
 	-> id, amount, PAYMENT_TYPE, started_date, end_date, user_id, nmadir_id
 
 USER_LEARNING_CENTER
-	-> id, PERMISSION, user_id, lc_id,
+	-> id, PERMISSION, user_id, lc_id, USER_STATUS
 
 USER_GROUP
 	->id, user_id, group_id, PERMISSION
@@ -48,5 +48,15 @@ group_status -> ACTIVE, DELETED
 
 payment_type -> LEARNING_CENTER, STUDENT, GROUP
 
+
+
+***************************
+id , name, surname, phone, ROLE, USER_STATUS, birthDate, GENDER, attach_id, password
+
+USER
+    1. getById -> USER
+    2. getPagination -> ADMIN
+    3. getPaginationByLearningCenterId -> ADMIN, USER(owner)
+    4.
 
 

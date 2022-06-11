@@ -34,6 +34,8 @@ public class UserEntity extends BaseEntity {
     @Column
     private String imageLink;
 
+    @Column
+    private String phone;
 
     @Column
     @Enumerated(EnumType.STRING)

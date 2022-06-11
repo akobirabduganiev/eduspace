@@ -3,9 +3,12 @@ package me.eduspace.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.eduspace.bucket.BucketName;
+import me.eduspace.dto.user.UserRequestDTO;
+import me.eduspace.dto.user.UserResponseDTO;
 import me.eduspace.entity.ConfirmationTokenEntity;
 import me.eduspace.entity.UserEntity;
 import me.eduspace.enums.ConfirmationStatus;
+import me.eduspace.enums.UserRole;
 import me.eduspace.enums.UserStatus;
 import me.eduspace.exceptions.AppBadRequestException;
 import me.eduspace.exceptions.ItemAlreadyExistsException;
@@ -15,7 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
@@ -31,6 +36,33 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
     private final FileStoreService fileStoreService;
+
+    /*public UserResponseDTO create(UserRequestDTO dto){
+        var optional = userRepository.findByEmail(dto.getEmail());
+
+        if (optional.isPresent())
+            throw new ItemAlreadyExistsException("email already exists!");
+
+        var entity=new UserEntity();
+        *//*@NotNull(message = "name request!")
+        private String name;
+        @NotNull(message = "surname request!")
+        private String surname;
+        @NotNull(message = "phone request!")
+        private String phone;
+        @NotNull(message = "email request!")
+        private String email;
+        @NotNull(message = "password request!")
+        private String password;
+        private LocalDate birthDate;
+        private UserRole role;*//*
+        entity.setName(dto.getName());
+        entity.setSurname(dto.getSurname());
+        entity.setPhone(dto.getPhone());
+        entity.setEmail(dto.getEmail());
+        entity.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+
+    }*/
 
     public String signUpUser(UserEntity entity) {
 
