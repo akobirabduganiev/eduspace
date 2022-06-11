@@ -20,7 +20,7 @@ public class ConfirmationTokenService {
     }
 
     public Optional<ConfirmationTokenEntity> getToken(String token) {
-        return confirmationTokenRepository.findBySmsAndStatus(token, ConfirmationStatus.ACTIVE);
+        return confirmationTokenRepository.findByTokenAndStatus(token, ConfirmationStatus.ACTIVE);
     }
 
     public void setConfirmedAt(String token) {

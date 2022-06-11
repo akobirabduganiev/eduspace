@@ -13,18 +13,18 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationTokenEntity, Long> {
-    Optional<ConfirmationTokenEntity> findBySmsAndStatus(String sms, ConfirmationStatus status);
+    Optional<ConfirmationTokenEntity> findByTokenAndStatus(String token, ConfirmationStatus status);
     Optional<ConfirmationTokenEntity> findByUserEntityIdAndStatus(Long userId, ConfirmationStatus status);
 
     @Transactional
     @Modifying
-    @Query("update ConfirmationTokenEntity set confirmedAt=:confirmedAt where sms=:sms")
-    void updateConfirmedAt(@Param("confirmedAt") LocalDateTime confirmedAt, @Param("sms") String sms);
+    @Query("update ConfirmationTokenEntity set confirmedAt=:confirmedAt where token=:token")
+    void updateConfirmedAt(@Param("confirmedAt") LocalDateTime confirmedAt, @Param("token") String token);
 
     @Transactional
     @Modifying
-    @Query(value = "update ConfirmationTokenEntity set status=:status where sms=:sms")
-    void updateStatus(@Param("status") ConfirmationStatus status, @Param("sms") String sms);
+    @Query(value = "update ConfirmationTokenEntity set status=:status where token=:token")
+    void updateStatus(@Param("status") ConfirmationStatus status, @Param("token") String token);
 
 
 }

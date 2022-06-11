@@ -80,8 +80,8 @@ public class UserService {
 
         var token = UUID.randomUUID().toString();
 
-        var smsOptional = confirmationTokenService.getToken(token);
-        smsOptional.ifPresent(confirmationTokenService::delete);
+        var tokenOptional = confirmationTokenService.getToken(token);
+        tokenOptional.ifPresent(confirmationTokenService::delete);
 
         var confirmationSms = new ConfirmationTokenEntity(
                 token,
