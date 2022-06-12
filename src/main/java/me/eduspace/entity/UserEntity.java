@@ -1,6 +1,7 @@
 package me.eduspace.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.eduspace.enums.Gender;
 import me.eduspace.enums.UserRole;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @Getter
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
 public class UserEntity extends BaseEntity {
 
     @Column
@@ -66,9 +68,6 @@ public class UserEntity extends BaseEntity {
         this.gender = gender;
     }
 
-    public UserEntity() {
-
-    }
 
     public Optional<String> getImageLink() {
         return Optional.ofNullable(imageLink);

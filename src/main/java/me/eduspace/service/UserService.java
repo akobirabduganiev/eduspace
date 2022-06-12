@@ -4,17 +4,19 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.eduspace.bucket.BucketName;
 import me.eduspace.dto.user.UserDetailDTO;
-import me.eduspace.dto.user.UserRequestDTO;
+import me.eduspace.dto.user.UserEmailDTO;
 import me.eduspace.dto.user.UserResponseDTO;
+import me.eduspace.dto.user.UserStatusDTO;
 import me.eduspace.entity.ConfirmationTokenEntity;
 import me.eduspace.entity.UserEntity;
 import me.eduspace.enums.ConfirmationStatus;
-import me.eduspace.enums.UserRole;
 import me.eduspace.enums.UserStatus;
 import me.eduspace.exceptions.AppBadRequestException;
 import me.eduspace.exceptions.ItemAlreadyExistsException;
 import me.eduspace.exceptions.ItemNotFoundException;
 import me.eduspace.repository.UserRepository;
+import me.eduspace.util.JwtUtil;
+import me.eduspace.util.email.EmailSender;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,15 +25,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 import static me.eduspace.util.AmazonUtil.*;
+import static me.eduspace.util.email.BuildEmail.buildEmail;
 
 @Service
 @AllArgsConstructor
@@ -41,6 +42,7 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
     private final FileStoreService fileStoreService;
+    private final EmailSender emailSender;
 
     public UserResponseDTO getById(Long id){
         return toDTO(checkOrGet(id));
@@ -63,8 +65,37 @@ public class UserService {
     public Boolean updateDetail(Long userId, UserDetailDTO dto){
         checkOrGet(userId);
 
-        return 0 < userRepository.updateDetail(dto.getName(), dto.getSurname(), dto.getPhone(), dto.getBirthDate(), dto.getGender(), userId);
+        return 0 < userRepository.updateDetail(dto.getName(), dto.getSurname(), dto.getPhone(), dto.getBirthDate(), dto.getGender(),LocalDateTime.now(), userId);
 
+    }
+
+    public String updateEmail(Long userId, UserEmailDTO dto){
+
+        var entity=checkOrGet(userId);
+
+        String jwt=JwtUtil.createJwt(userId, dto.getEmail());
+
+        String link = "http://localhost:8080/api/v1/user/confirm-email/" + jwt;
+        var thread = new Thread(() -> emailSender.send(
+                dto.getEmail(),
+                buildEmail(entity.getName(), link)));
+        thread.start();
+
+        return "Message send to your email!!!";
+    }
+
+    public Boolean confirmEmail(String jwt){
+
+        var dto=JwtUtil.decodeJwt(jwt);
+
+        checkOrGet(dto.getId());
+
+        return 0 < userRepository.updateEmail(dto.getName(),LocalDateTime.now(), dto.getId());
+    }
+
+    public Boolean changeStatus(UserStatusDTO dto){
+        checkOrGet(dto.getUserId());
+        return 0 < userRepository.updateStatus(dto.getStatus(), LocalDateTime.now(), dto.getUserId());
     }
 
     public String signUpUser(UserEntity entity) {
@@ -83,18 +114,15 @@ public class UserService {
 
         var token = UUID.randomUUID().toString();
 
-        var tokenOptional = confirmationTokenService.getToken(token);
-        tokenOptional.ifPresent(confirmationTokenService::delete);
-
-        var confirmationSms = new ConfirmationTokenEntity(
+        var confirmationToken = new ConfirmationTokenEntity(
                 token,
                 LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(2),
+                LocalDateTime.now().plusMinutes(15),
                 ConfirmationStatus.ACTIVE,
                 entity
         );
 
-        confirmationTokenService.confirmationToken(confirmationSms);
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
 
         return token;
     }
@@ -142,7 +170,7 @@ public class UserService {
     }
 
     public UserEntity checkOrGet(Long id) {
-        return userRepository.findById(id)
+        return userRepository.findByIdAndIsDeleted(id, false)
                 .orElseThrow(() -> {
                     log.info("user not found {}", id);
                     throw new ItemNotFoundException("user not found");

@@ -15,11 +15,10 @@ import me.eduspace.util.email.EmailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.DateTimeException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
+import static me.eduspace.util.date.DateUtil.*;
 import static me.eduspace.util.email.BuildEmail.buildEmail;
 
 @Service
@@ -33,8 +32,6 @@ public class RegistrationService {
     public String registerUser(RegistrationRequestDTO request) {
 
         try {
-            LocalDate date = LocalDate.parse(request.getBirthDate(),
-                    DateTimeFormatter.ofPattern("d/MM/yyyy"));
 
             String token = userService.signUpUser(
                     new UserEntity(
@@ -43,7 +40,7 @@ public class RegistrationService {
                             request.getEmail(),
                             request.getPassword(),
                             UserRole.ROLE_USER,
-                            date,
+                            stringToDate(request.getBirthDate()),
                             request.getGender()
                     )
             );
@@ -92,7 +89,7 @@ public class RegistrationService {
 
         confirmationTokenService.delete(confirmationToken);
 
-        confirmationTokenService.confirmationToken(
+        confirmationTokenService.saveConfirmationToken(
                 new ConfirmationTokenEntity(
                         token,
                         LocalDateTime.now(),

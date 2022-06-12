@@ -29,7 +29,7 @@ public class JwtUtil {
             Jws<Claims> jws = jwtParser.parseClaimsJws(jwt);
 
             Claims claims = jws.getBody();
-            Integer id = Integer.valueOf(claims.getSubject());
+            Long id = Long.valueOf(claims.getSubject());
             String userName = (String) claims.get("userName");
             return new JwtDTO(id, userName);
         } catch (JwtException e) {

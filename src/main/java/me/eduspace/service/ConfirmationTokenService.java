@@ -15,7 +15,7 @@ import java.util.Optional;
 public class ConfirmationTokenService {
     private final ConfirmationTokenRepository confirmationTokenRepository;
 
-    public void confirmationToken(ConfirmationTokenEntity token) {
+    public void saveConfirmationToken(ConfirmationTokenEntity token) {
         confirmationTokenRepository.save(token);
     }
 

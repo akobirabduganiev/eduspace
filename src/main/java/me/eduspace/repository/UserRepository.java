@@ -16,6 +16,8 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByEmail(String email);
 
+    Optional<UserEntity> findByIdAndIsDeleted(Long id, Boolean boolen);
+
     @Transactional
     @Modifying
     @Query("update UserEntity u " +
@@ -34,7 +36,17 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     @Transactional
     @Modifying
-    @Query("update UserEntity set name=:name, surname=:surname , phone=:phone ,birthDate=:birthDate , gender=:gender  where id=:id")
-    int updateDetail(@Param("name") String name, @Param("surname") String surname, @Param("phone") String phone,
-                      @Param("birthDate") LocalDate birthDate, @Param("gender") Gender gender, @Param("id") Long id);
+    @Query("update UserEntity set name=:name, surname=:surname , phone=:phone ,birthDate=:birthDate , gender=:gender , lastModifiedDate=:lastDate where id=:id")
+    int updateDetail(@Param("name") String name, @Param("surname") String surname, @Param("phone") String phone, @Param("birthDate") LocalDate birthDate,
+                     @Param("gender") Gender gender,@Param("lastDate") LocalDateTime lastDate, @Param("id") Long id);
+
+    @Transactional
+    @Modifying
+    @Query("update UserEntity set email=:email, lastModifiedDate=:lastDate where id=:id")
+    int updateEmail(@Param("email") String email, @Param("lastDate") LocalDateTime lastDate,@Param("id") Long id);
+
+    @Transactional
+    @Modifying
+    @Query("update UserEntity set status=:status, lastModifiedDate=:lastDate where id=:id")
+    int updateStatus(@Param("status") UserStatus status, @Param("lastDate") LocalDateTime lastDate,@Param("id") Long id);
 }

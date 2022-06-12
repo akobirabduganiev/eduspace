@@ -8,10 +8,10 @@ import lombok.Setter;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class JwtDTO {
-    private Integer id;
+    private Long id;
     private String name;
 
-    public JwtDTO(Integer id, String name) {
+    public JwtDTO(Long id, String name) {
         this.id = id;
         this.name = name;
     }
