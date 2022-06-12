@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.eduspace.dto.user.UserEmailDTO;
 import me.eduspace.dto.user.UserStatusDTO;
+import me.eduspace.enums.UserRole;
 import me.eduspace.enums.bucket.BucketName;
 import me.eduspace.dto.user.UserDetailDTO;
 import me.eduspace.dto.user.UserResponseDTO;
@@ -65,6 +66,12 @@ public class UserService {
     public Boolean updateDetail(Long userId, UserDetailDTO dto){
         checkOrGet(userId);
         return 0 < userRepository.updateDetail(dto.getName(), dto.getSurname(), dto.getPhone(), dto.getBirthDate(), dto.getGender(),LocalDateTime.now(), userId);
+    }
+
+    public void setRoleById(Long userId, UserRole role){
+        var user=checkOrGet(userId);
+        user.setRole(role);
+        userRepository.save(user);
     }
 
     public String updateEmail(Long userId, UserEmailDTO dto){
@@ -187,7 +194,7 @@ public class UserService {
                 .email(entity.getEmail())
                 .password(entity.getPassword())
                 .birthDate(entity.getBirthDate())
-                .role(entity.getRole())
+                .roleList(entity.getRoleList())
                 .gender(entity.getGender())
                 .createdDate(entity.getCreatedDate())
                 .lastModifiedDate(entity.getLastModifiedDate())

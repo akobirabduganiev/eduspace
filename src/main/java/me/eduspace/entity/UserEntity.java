@@ -6,10 +6,12 @@ import lombok.Setter;
 import me.eduspace.enums.Gender;
 import me.eduspace.enums.UserRole;
 import me.eduspace.enums.UserStatus;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.List;
 
 @Setter
 @Getter
@@ -41,7 +43,8 @@ public class UserEntity extends BaseEntity {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    @Type(type = "list-array")
+    private List<UserRole> roleList;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -63,13 +66,16 @@ public class UserEntity extends BaseEntity {
         this.surname = surname;
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.roleList.add(role);
         this.birthDate = birthDate;
         this.gender = gender;
     }
 
-
     public Optional<String> getImageLink() {
         return Optional.ofNullable(imageLink);
+    }
+
+    public void setRole(UserRole role){
+        this.roleList.add(role);
     }
 }

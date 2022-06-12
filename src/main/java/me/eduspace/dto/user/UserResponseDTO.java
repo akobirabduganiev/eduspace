@@ -9,6 +9,7 @@ import me.eduspace.enums.UserRole;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -21,7 +22,7 @@ public class UserResponseDTO {
     private LocalDate birthDate;
     private Gender gender;
     private String password;
-    private UserRole role;
+    private List<UserRole> roleList;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
 
