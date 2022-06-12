@@ -5,12 +5,15 @@ import lombok.extern.slf4j.Slf4j;
 import me.eduspace.dto.learningcenter.LearningCenterDTO;
 import me.eduspace.dto.learningcenter.LearningCenterRequestDTO;
 import me.eduspace.entity.LearningCenterEntity;
+import me.eduspace.exceptions.ItemNotFoundException;
 import me.eduspace.repository.LearningCenterRepository;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +45,25 @@ public class LearningCenterService {
     }
 
     public LearningCenterDTO getById(Long id) {
-        return null;
+        var entity = learningCenterRepository.findByIdAndIsDeleted(id, false)
+                .orElseThrow(() -> new ItemNotFoundException("learning center not found"));
+
+        return toDTO(entity);
+
+    }
+
+    public LearningCenterEntity checkOrGet(Long id) {
+        return learningCenterRepository.findByIdAndIsDeleted(id, false)
+                .orElseThrow(() -> new ItemNotFoundException("learning center not found"));
+    }
+
+    public String delete(Long id) {
+        var entity = checkOrGet(id);
+        learningCenterRepository.deleteById(entity.getId());
+        learningCenterRepository.updateLastModifiedDate(LocalDateTime.now(), id);
+
+        return "deleted successfully!";
+
     }
 
     private LearningCenterDTO toDTO(LearningCenterEntity entity) {
