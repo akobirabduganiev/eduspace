@@ -71,11 +71,12 @@ public class PaymentService {
                 .amount(entity.getAmount())
                 .startDate(entity.getStartDate())
                 .endDate(entity.getEndDate())
-                .user(new UserResponseDTO(
-                                user.getId(),
-                                user.getName(),
-                                user.getSurname(),
-                                user.getEmail()))
+                .user(UserResponseDTO.builder()
+                        .id(user.getId())
+                        .name(user.getName())
+                        .surname(user.getSurname())
+                        .email(user.getEmail())
+                        .build())
                 .build();
     }
 }

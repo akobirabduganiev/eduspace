@@ -24,6 +24,8 @@ public class AuthorizationService {
 
         if (!encoder.matches(dto.getPassword(), profile.getPassword()))
             throw new AppBadRequestException("Login or Password not valid");
+        if (!profile.getEnabled())
+            throw new AppBadRequestException("email not confirmed!");
 
         var jwt = JwtUtil.createJwt(profile.getId(), profile.getEmail());
 

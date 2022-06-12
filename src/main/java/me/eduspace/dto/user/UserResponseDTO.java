@@ -16,12 +16,13 @@ public class UserResponseDTO {
     private Long id;
     private String name;
     private String surname;
+    private String email;
     private String phone;
     private LocalDate birthDate;
     private Gender gender;
-    private String email;
     private String password;
     private UserRole role;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
+
 }
