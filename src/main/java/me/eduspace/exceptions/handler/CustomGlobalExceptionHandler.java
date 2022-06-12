@@ -1,4 +1,4 @@
-package me.eduspace.controller;
+package me.eduspace.exceptions.handler;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
