@@ -3,6 +3,6 @@ POST http://localhost:8080/api/v1/authorization/login
 Content-Type: application/json
 
 {
-  "email": "akobir.abduganiev@ya.ru",
-  "password": "Akobir2003"
+  "email": "bahromovjamshid503@gmail.com",
+  "password": "password"
 }

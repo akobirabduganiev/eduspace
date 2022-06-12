@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
-    Optional<UserEntity> findByEmail(String email);
+    Optional<UserEntity> findByEmailAndIsDeleted(String email, Boolean boolen);
 
     Optional<UserEntity> findByIdAndIsDeleted(Long id, Boolean boolen);
 
@@ -36,9 +36,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     @Transactional
     @Modifying
-    @Query("update UserEntity set name=:name, surname=:surname , phone=:phone ,birthDate=:birthDate , gender=:gender , lastModifiedDate=:lastDate where id=:id")
+    @Query("update UserEntity set name=:name, surname=:surname , phone=:phone ,birthDate=:birthDate , gender=:gender , lastModifiedDate=:lastDate where email=:email")
     int updateDetail(@Param("name") String name, @Param("surname") String surname, @Param("phone") String phone, @Param("birthDate") LocalDate birthDate,
-                     @Param("gender") Gender gender,@Param("lastDate") LocalDateTime lastDate, @Param("id") Long id);
+                     @Param("gender") Gender gender,@Param("lastDate") LocalDateTime lastDate, @Param("email") String email);
 
     @Transactional
     @Modifying

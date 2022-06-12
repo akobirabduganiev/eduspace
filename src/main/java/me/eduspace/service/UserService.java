@@ -63,22 +63,22 @@ public class UserService {
     }
 
 
-    public Boolean updateDetail(Long userId, UserDetailDTO dto){
-        checkOrGet(userId);
-        return 0 < userRepository.updateDetail(dto.getName(), dto.getSurname(), dto.getPhone(), dto.getBirthDate(), dto.getGender(),LocalDateTime.now(), userId);
+    public Boolean updateDetail(String email, UserDetailDTO dto){
+        getUserByEmail(email);
+        return 0 < userRepository.updateDetail(dto.getName(), dto.getSurname(), dto.getPhone(), dto.getBirthDate(), dto.getGender(),LocalDateTime.now(), email);
     }
 
-    public void setRoleById(Long userId, UserRole role){
+    /*public void setRoleById(Long userId, UserRole role){
         var user=checkOrGet(userId);
         user.setRole(role);
         userRepository.save(user);
-    }
+    }*/
 
-    public String updateEmail(Long userId, UserEmailDTO dto){
+    public String updateEmail(String email, UserEmailDTO dto){
 
-        var entity=checkOrGet(userId);
+        var entity=getUserByEmail(email);
 
-        String jwt=JwtUtil.createJwt(userId, dto.getEmail());
+        String jwt=JwtUtil.createJwt(entity.getId(), dto.getEmail());
 
         String link = "http://localhost:8080/api/v1/user/confirm-email/" + jwt;
         var thread = new Thread(() -> emailSender.send(
@@ -103,9 +103,14 @@ public class UserService {
         return 0 < userRepository.updateStatus(dto.getStatus(), LocalDateTime.now(), dto.getUserId());
     }
 
+
+
+    /**
+     * METHODS FOR REGISTR */
+
     public String signUpUser(UserEntity entity) {
 
-        var optional = userRepository.findByEmail(entity.getEmail());
+        var optional = userRepository.findByEmailAndIsDeleted(entity.getEmail(), false);
 
         if (optional.isPresent())
             throw new ItemAlreadyExistsException("email already exists!");
@@ -174,8 +179,15 @@ public class UserService {
     }
 
     public UserEntity getUserByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new ItemNotFoundException("user not found"));
+        return userRepository.findByEmailAndIsDeleted(email, false).orElseThrow(() -> new ItemNotFoundException("user not found"));
     }
+
+
+
+    /**
+     * OTHER METHODS*/
+
+
 
     public UserEntity checkOrGet(Long id) {
         return userRepository.findByIdAndIsDeleted(id, false)
@@ -194,7 +206,7 @@ public class UserService {
                 .email(entity.getEmail())
                 .password(entity.getPassword())
                 .birthDate(entity.getBirthDate())
-                .roleList(entity.getRoleList())
+                .role(entity.getRole())
                 .gender(entity.getGender())
                 .createdDate(entity.getCreatedDate())
                 .lastModifiedDate(entity.getLastModifiedDate())

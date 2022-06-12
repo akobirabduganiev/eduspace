@@ -22,7 +22,7 @@ public class UserResponseDTO {
     private LocalDate birthDate;
     private Gender gender;
     private String password;
-    private List<UserRole> roleList;
+    private UserRole role;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
 

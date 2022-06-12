@@ -4,8 +4,8 @@ Content-Type: application/json
 {
   "name": "Ali",
   "surname": "Aliyev",
-  "phone": "+998931234321",
   "password": "password",
+  "email": "bahromovjamshid503@gmail.com",
   "birthDate": "24/01/2000",
   "gender": "MALE"
 }

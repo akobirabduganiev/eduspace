@@ -19,7 +19,7 @@ public class AuthorizationService {
         var encoder = new BCryptPasswordEncoder();
 
         var profile = userRepository
-                .findByEmail(dto.getEmail())
+                .findByEmailAndIsDeleted(dto.getEmail(), false)
                 .orElseThrow(() -> new AppBadRequestException("Login or Password not valid."));
 
         if (!encoder.matches(dto.getPassword(), profile.getPassword()))

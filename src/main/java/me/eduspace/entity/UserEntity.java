@@ -7,6 +7,7 @@ import me.eduspace.enums.Gender;
 import me.eduspace.enums.UserRole;
 import me.eduspace.enums.UserStatus;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -43,8 +44,7 @@ public class UserEntity extends BaseEntity {
 
     @Column
     @Enumerated(EnumType.STRING)
-    @Type(type = "list-array")
-    private List<UserRole> roleList;
+    private UserRole role;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -66,7 +66,7 @@ public class UserEntity extends BaseEntity {
         this.surname = surname;
         this.email = email;
         this.password = password;
-        this.roleList.add(role);
+        this.role=role;
         this.birthDate = birthDate;
         this.gender = gender;
     }
@@ -75,7 +75,7 @@ public class UserEntity extends BaseEntity {
         return Optional.ofNullable(imageLink);
     }
 
-    public void setRole(UserRole role){
+   /* public void setRole(UserRole role){
         this.roleList.add(role);
-    }
+    }*/
 }
