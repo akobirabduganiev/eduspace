@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Setter
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class LearningCenterRegistrationRequestDTO {
+public class LearningCenterRequestDTO {
     @NotBlank(message = "name required")
     @Size(min = 3, max = 255, message = "entered information must be more than 3 letters and less than 255 letters!")
     private String name;

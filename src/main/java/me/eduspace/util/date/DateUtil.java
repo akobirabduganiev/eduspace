@@ -19,7 +19,7 @@ public class DateUtil {
     }
 
     public static LocalTime stringToTime(String str){
-        return LocalTime.parse("05:58:44", DateTimeFormatter.ofPattern("HH:mm:ss"));
+        return LocalTime.parse(str, DateTimeFormatter.ofPattern("HH:mm:ss"));
 
     }
 }

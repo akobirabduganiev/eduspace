@@ -51,9 +51,7 @@ payment_type -> LEARNING_CENTER, USER, GROUP
 USER
     1. getById -> USER
     2. getPagination -> ADMIN
-    3. updateDetail -> USER
-    4. updateEmail -> USER
-    5. confirmEmail -> USER
-    6. changeStatus -> ADMIN
+    3. getPaginationByLearningCenterId -> ADMIN, USER(owner)
+    4.
 
 

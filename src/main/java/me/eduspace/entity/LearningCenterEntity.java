@@ -16,5 +16,5 @@ public class LearningCenterEntity extends BaseEntity {
     @Column
     private String name;
     @Column
-    private String attachId;
+    private String imageLink;
 }

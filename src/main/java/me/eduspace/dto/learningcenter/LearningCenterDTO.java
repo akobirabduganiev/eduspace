@@ -1,9 +1,7 @@
 package me.eduspace.dto.learningcenter;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +13,8 @@ public class LearningCenterDTO {
     private Long id;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
+    private Boolean isDeleted;
     private String description;
     private String name;
-    private String phone;
+    private String imageLink;
 }

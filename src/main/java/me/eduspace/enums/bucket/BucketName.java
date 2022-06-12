@@ -1,4 +1,4 @@
-package me.eduspace.bucket;
+package me.eduspace.enums.bucket;
 
 public enum BucketName {
     PROFILE_IMAGE("eduspace-image-store");
