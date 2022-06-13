@@ -26,6 +26,7 @@ public class LearningCenterService {
 
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
+
         learningCenterRepository.save(entity);
 
         return toDTO(entity);
@@ -52,10 +53,6 @@ public class LearningCenterService {
 
     }
 
-    public LearningCenterEntity checkOrGet(Long id) {
-        return learningCenterRepository.findByIdAndIsDeleted(id, false)
-                .orElseThrow(() -> new ItemNotFoundException("learning center not found"));
-    }
 
     public String delete(Long id) {
         var entity = checkOrGet(id);
@@ -65,6 +62,22 @@ public class LearningCenterService {
         return "deleted successfully!";
 
     }
+
+    public String update(Long id, LearningCenterRequestDTO dto) {
+        var entity = checkOrGet(id);
+
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+
+        learningCenterRepository.save(entity);
+        learningCenterRepository.updateLastModifiedDate(LocalDateTime.now(), id);
+
+        return "updated successfully";
+    }
+
+    /**
+     * OTHER METHODS
+     **/
 
     private LearningCenterDTO toDTO(LearningCenterEntity entity) {
         var dto = new LearningCenterDTO();
@@ -77,5 +90,10 @@ public class LearningCenterService {
 
         return dto;
 
+    }
+
+    public LearningCenterEntity checkOrGet(Long id) {
+        return learningCenterRepository.findByIdAndIsDeleted(id, false)
+                .orElseThrow(() -> new ItemNotFoundException("learning center not found"));
     }
 }

@@ -45,7 +45,7 @@ public class UserController {
         return userService.downloadUserProfileImage(userDetails.getUsername());
     }
 
-    @ApiOperation(value = "user getById ", notes = "method for user getById")
+    @ApiOperation(value = "get by id ", notes = "method for get user by id")
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UserResponseDTO> getById(@PathVariable("id") Long userId ) {

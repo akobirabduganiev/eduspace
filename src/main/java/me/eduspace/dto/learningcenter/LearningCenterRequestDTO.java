@@ -17,9 +17,6 @@ public class LearningCenterRequestDTO {
     @Size(min = 3, max = 255, message = "entered information must be more than 3 letters and less than 255 letters!")
     private String name;
 
-    @NotBlank(message = "phone required")
-    private String phone;
-
     @NotBlank(message = "description required")
     private String description;
 }
