@@ -2,16 +2,15 @@ package me.eduspace.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.ToString;
 import me.eduspace.enums.Gender;
 import me.eduspace.enums.UserRole;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Builder
+@ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserResponseDTO {
     private Long id;

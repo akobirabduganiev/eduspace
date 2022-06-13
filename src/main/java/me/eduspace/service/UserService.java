@@ -198,7 +198,7 @@ public class UserService {
     }
 
     public UserResponseDTO toDTO(UserEntity entity){
-       return UserResponseDTO.builder()
+       var user= UserResponseDTO.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .surname(entity.getSurname())
@@ -211,6 +211,8 @@ public class UserService {
                 .createdDate(entity.getCreatedDate())
                 .lastModifiedDate(entity.getLastModifiedDate())
                 .build();
+
+       return user;
     }
 
 }

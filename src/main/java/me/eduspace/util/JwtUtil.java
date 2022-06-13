@@ -35,7 +35,5 @@ public class JwtUtil {
         } catch (JwtException e) {
             throw new TimeExpiredException("JWT time expired");
         }
-
     }
-
 }

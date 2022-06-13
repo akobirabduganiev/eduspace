@@ -1,4 +1,4 @@
-###
+### LOGIN
 POST http://localhost:8080/api/v1/authorization/login
 Content-Type: application/json
 
